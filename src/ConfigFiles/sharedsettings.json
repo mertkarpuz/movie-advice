@@ -1,0 +1,5 @@
+{
+  "MovieDbApiUrl": "https://api.themoviedb.org/3/movie/now_playing",
+  "ApiKey": "c65ceca895a683785df76dcb015143d5",
+  "ApiLanguage": "tr-TR"
+}
