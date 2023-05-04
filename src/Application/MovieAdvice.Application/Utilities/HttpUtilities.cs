@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using MovieAdvice.Application.Interfaces;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.Utilities
 {
-    public class HttpUtilities
+    public class HttpUtilities : IHttpUtilities
     {
-        public string? ExecuteGetHttpRequest(string endpoint, Dictionary<string,string>? headers)
+        public async Task<string?> ExecuteGetHttpRequest(string endpoint, Dictionary<string, string>? headers)
         {
             RestClient client = new(endpoint);
             RestRequest request = new(endpoint, Method.Get);
@@ -20,7 +21,7 @@ namespace MovieAdvice.Application.Utilities
                     request.AddHeader(header.Key, header.Value);
                 }
             }
-            RestResponse response = client.ExecuteAsync(request).GetAwaiter().GetResult();
+            RestResponse? response = await client.ExecuteAsync(request);
 
             return response.Content;
         }
