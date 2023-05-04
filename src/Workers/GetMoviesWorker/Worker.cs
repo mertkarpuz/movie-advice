@@ -1,3 +1,5 @@
+using Cronos;
+using Microsoft.Extensions.Logging;
 using MovieAdvice.Application.Interfaces;
 
 namespace GetMoviesWorker
@@ -6,36 +8,69 @@ namespace GetMoviesWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IGetMoviesService getMoviesService;
+        private const string schedule = "* * * * *"; // every hour
+        private readonly CronExpression cron;
         public Worker(ILogger<Worker> logger, IGetMoviesService getMoviesService)
         {
             _logger = logger;
             this.getMoviesService = getMoviesService;
+            cron = CronExpression.Parse(schedule);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            int? totalPage = 0;
-            int currentPage = 1;
-
-            var rootApiModel = await getMoviesService.GetMovies(currentPage); //id.
-
-            if (rootApiModel != null)
+            while (!stoppingToken.IsCancellationRequested)
             {
-                totalPage = rootApiModel.TotalPages;
+                _logger.LogInformation("-------------Worker running at: {time}", DateTimeOffset.Now);
+                var utcNow = DateTime.UtcNow;
+                DateTime? nextUtc = cron.GetNextOccurrence(utcNow);
+                await Task.Delay(nextUtc.Value - utcNow, stoppingToken);
+                await DoBackupAsync();
+
             }
-            while (totalPage > currentPage)
-            {
-                currentPage++;
-                rootApiModel = await getMoviesService.GetMovies(currentPage);
 
-                if (rootApiModel != null && rootApiModel.Movies != null)
+
+        }
+
+        public async Task DoBackupAsync()
+        {
+            try
+            {
+                int? totalPage = 0;
+                int currentPage = 1;
+                int test = 1;
+
+                var rootApiModel = await getMoviesService.GetMovies(currentPage);
+
+                if (rootApiModel != null)
                 {
-                    _logger.LogInformation(currentPage.ToString());
+                    totalPage = rootApiModel.TotalPages;
                 }
+                while (totalPage >= currentPage)
+                {
+                    // addDb
+                    if (rootApiModel != null && rootApiModel.Movies != null)
+                    {
+                        
+                        foreach (var item in rootApiModel.Movies)
+                        {
+                            _logger.LogInformation(item.OriginalTitle);
+                            Thread.Sleep(10);
+                        }
+                    }
+
+                    currentPage++;
+                    rootApiModel = await getMoviesService.GetMovies(currentPage);
+
+                    
+                }
+                _logger.LogInformation("total " + test);
             }
-
-
-
+            catch (Exception ex)
+            {
+                _logger.LogError("",ex);
+            }
+            
         }
     }
 }
