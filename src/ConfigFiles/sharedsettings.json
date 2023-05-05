@@ -1,4 +1,7 @@
 {
+  "ConnectionStrings": {
+    "SQLConnection": "Server=DESKTOP-1SLG2VP;User Id=sa;Password=phoenix1;Database=MovieAdviceDB;TrustServerCertificate=True"
+  },
   "MovieApiConfigurations": {
     "ApiUrl": "https://api.themoviedb.org/3/movie/now_playing",
     "ApiKey": "c65ceca895a683785df76dcb015143d5",

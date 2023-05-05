@@ -1,6 +1,9 @@
 using Cronos;
 using Microsoft.Extensions.Logging;
+using MovieAdvice.Application.ConfigModels;
 using MovieAdvice.Application.Interfaces;
+using MovieAdvice.Domain.ApiModels.MovieApi;
+using MovieAdvice.Domain.Models;
 
 namespace GetMoviesWorker
 {
@@ -8,12 +11,15 @@ namespace GetMoviesWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IGetMoviesService getMoviesService;
+        //private readonly IMoviesService moviesService;
         private const string schedule = "* * * * *"; // every hour
         private readonly CronExpression cron;
-        public Worker(ILogger<Worker> logger, IGetMoviesService getMoviesService)
+        private readonly IServiceProvider Services;
+        public Worker(ILogger<Worker> logger, IServiceProvider services, IGetMoviesService getMoviesService)
         {
             _logger = logger;
             this.getMoviesService = getMoviesService;
+            Services = services;
             cron = CronExpression.Parse(schedule);
         }
 
@@ -21,24 +27,25 @@ namespace GetMoviesWorker
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("-------------Worker running at: {time}", DateTimeOffset.Now);
-                var utcNow = DateTime.UtcNow;
+                _logger.LogInformation("----Worker running at: {time} ----", DateTimeOffset.Now);
+                DateTime utcNow = DateTime.UtcNow;
                 DateTime? nextUtc = cron.GetNextOccurrence(utcNow);
                 await Task.Delay(nextUtc.Value - utcNow, stoppingToken);
                 await DoBackupAsync();
-
             }
-
-
         }
 
         public async Task DoBackupAsync()
         {
             try
             {
+                IServiceScope scope = Services.CreateScope();
+                IMoviesService moviesService = scope.ServiceProvider.GetRequiredService<IMoviesService>();
                 int? totalPage = 0;
                 int currentPage = 1;
-                int test = 1;
+                List<MovieApiModel> movieList = new();
+
+                moviesService.UpdateMoviesStatus();
 
                 var rootApiModel = await getMoviesService.GetMovies(currentPage);
 
@@ -46,31 +53,31 @@ namespace GetMoviesWorker
                 {
                     totalPage = rootApiModel.TotalPages;
                 }
+
                 while (totalPage >= currentPage)
                 {
-                    // addDb
                     if (rootApiModel != null && rootApiModel.Movies != null)
                     {
-                        
-                        foreach (var item in rootApiModel.Movies)
+
+                        foreach (var movie in rootApiModel.Movies)
                         {
-                            _logger.LogInformation(item.OriginalTitle);
-                            Thread.Sleep(10);
+                            movieList.Add(movie);
                         }
                     }
-
                     currentPage++;
                     rootApiModel = await getMoviesService.GetMovies(currentPage);
-
-                    
                 }
-                _logger.LogInformation("total " + test);
+
+                moviesService.SaveMovie(movieList);
+
+                _logger.LogInformation("---- DONE ---- ");
+
+                scope.Dispose();
             }
             catch (Exception ex)
             {
-                _logger.LogError("",ex);
+                _logger.LogError("", ex);
             }
-            
         }
     }
 }
