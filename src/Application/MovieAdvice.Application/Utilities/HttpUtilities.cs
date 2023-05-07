@@ -1,12 +1,12 @@
 ﻿using MovieAdvice.Application.Interfaces;
 using RestSharp;
-
+using System.Text;
 
 namespace MovieAdvice.Application.Utilities
 {
     public class HttpUtilities : IHttpUtilities
     {
-        public async Task<string?> ExecuteGetHttpRequest(string endpoint, Dictionary<string, string>? headers)
+        public async Task<string> ExecuteGetHttpRequest(string endpoint, Dictionary<string, string> headers)
         {
             RestClient client = new(endpoint);
             RestRequest request = new(endpoint, Method.Get);
@@ -17,9 +17,11 @@ namespace MovieAdvice.Application.Utilities
                     request.AddHeader(header.Key, header.Value);
                 }
             }
-            RestResponse? response = await client.ExecuteAsync(request);
+            RestResponse response = await client.ExecuteAsync(request);
 
             return response.Content;
         }
+
+       
     }
 }

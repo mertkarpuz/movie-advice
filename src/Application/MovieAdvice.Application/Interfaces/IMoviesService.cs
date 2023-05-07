@@ -1,4 +1,5 @@
-﻿using MovieAdvice.Domain.ApiModels.MovieApi;
+﻿using MovieAdvice.Application.Dtos.Movie;
+using MovieAdvice.Domain.ApiModels.MovieApi;
 using MovieAdvice.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,10 @@ namespace MovieAdvice.Application.Interfaces
     public interface IMoviesService
     {
         void SaveMovie(List<MovieApiModel> movieApiModelList);
-        Task<Movie> GetMovie(int movieId);
+        Task<GetMovieDto> GetMovie(int movieId);
         void UpdateMoviesStatus();
-        Task<List<Movie>> GetActiveMovies();
+        Task<List<MovieListDto>> GetActiveMovies(int pageIndex);
+        Task<int> GetActiveMoviesTotalPage();
+        Task<bool> IsMovieExists(int movieId);
     }
 }

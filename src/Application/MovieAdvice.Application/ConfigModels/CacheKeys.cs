@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.ConfigModels
 {
-    public class ConnectionStrings
+    public class CacheKeys
     {
-        public string SQLConnection { get; set; } = string.Empty;
-        public string RedisConnection { get; set; } = string.Empty;
+        public string ActiveMoviesKey { get; set; }
     }
 }

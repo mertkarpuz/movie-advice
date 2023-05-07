@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.ConfigModels
 {
-    public class ConnectionStrings
+    public class RabbitMqConfiguration
     {
-        public string SQLConnection { get; set; } = string.Empty;
-        public string RedisConnection { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+        public string MakeAdviceQueue { get; set; } = string.Empty;
     }
 }

@@ -1,17 +1,30 @@
-using MovieAdvice.Application.Interfaces;
-using MovieAdvice.Application.Services;
-using MovieAdvice.Application.Utilities;
+using MovieAdvice.Application.IoC;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(opt =>
+{
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IHttpUtilities, HttpUtilities>();
-builder.Services.AddScoped<IGetMoviesService, GetMoviesService>();
+
+builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    var env = hostingContext.HostingEnvironment;
+    var sharedFolder = Path.Combine(env.ContentRootPath, "..", "ConfigFiles");
+    config.AddJsonFile(Path.Combine(sharedFolder, "sharedsettings.json"), optional: true)
+    .AddJsonFile("sharedsettings.json", optional: true);
+    //.AddJsonFile("appsettings.json", optional: true);
+});
+
+DependencyInjection.RegisterServices(builder.Services, builder.Configuration);
+
+
 
 var app = builder.Build();
 
@@ -22,6 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

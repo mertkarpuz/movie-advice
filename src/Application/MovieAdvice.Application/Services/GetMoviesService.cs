@@ -14,10 +14,10 @@ namespace MovieAdvice.Application.Services
             this.httpUtilities = httpUtilities;
             this.configuration = configuration;
         }
-        public async Task<RootApiModel?> GetMovies(int page)
+        public async Task<RootApiModel> GetMovies(int page)
         {
-            RootApiModel? rootApiModel = new();
-            string? response = await httpUtilities.ExecuteGetHttpRequest(configuration.MovieApiConfigurations.ApiUrl +
+            RootApiModel rootApiModel = new();
+            string response = await httpUtilities.ExecuteGetHttpRequest(configuration.MovieApiConfigurations.ApiUrl +
                 "?api_key=" + configuration.MovieApiConfigurations.ApiKey +
                 "&language=" + configuration.MovieApiConfigurations.ApiLanguage + "&page=" + page, null);
             if (!string.IsNullOrEmpty(response))

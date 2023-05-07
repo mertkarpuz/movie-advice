@@ -1,0 +1,68 @@
+﻿using AutoMapper;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MovieAdvice.Application.Dtos.Comment;
+using MovieAdvice.Application.Interfaces;
+using MovieAdvice.Application.Validation.FluentValidation.Comment;
+using System.Security.Claims;
+
+namespace MovieAdvice.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize]
+    public class CommentController : ControllerBase
+    {
+        private readonly ICommentService commentService;
+        private readonly ILogger<CommentController> logger;
+        private readonly CommentAddDtoValidator commentAddDtoValidator;
+        private readonly IMoviesService moviesService;
+        private readonly IMapper mapper;
+        private ValidationResult validationResult;
+        public CommentController(ICommentService commentService, ILogger<CommentController> logger, IMoviesService moviesService, IMapper mapper)
+        {
+            this.commentService = commentService;
+            this.logger = logger;
+            this.moviesService = moviesService;
+            commentAddDtoValidator = new(moviesService);
+            validationResult = new();
+            this.mapper = mapper;
+        }
+
+        [HttpPost]
+        [Route("AddComment")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> AddComment(CommentAddDto commentAddDto)
+        {
+            try
+            {
+                validationResult = await commentAddDtoValidator.ValidateAsync(commentAddDto);
+                if (validationResult.IsValid)
+                {
+                    CommentSaveDto commentSaveDto = mapper.Map<CommentSaveDto>(commentAddDto);
+                    commentSaveDto.UserId = Convert.ToInt32(User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                    await commentService.SaveComment(commentSaveDto);
+                    return Created("", commentAddDto);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("AddComment", ex);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }
+
+            return BadRequest(new
+            {
+                validationResult.Errors
+            });
+
+        }
+    }
+}

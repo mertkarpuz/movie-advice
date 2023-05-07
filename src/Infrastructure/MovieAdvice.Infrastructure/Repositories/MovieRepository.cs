@@ -28,9 +28,27 @@ namespace MovieAdvice.Infrastructure.Repositories
         {
             await context.Movies.Where(x=>x.Status == true).ForEachAsync(x => x.Status = false);
         }
-        public async Task<List<Movie>> GetActiveMovies() // pagination
+        public async Task<List<Movie>> GetActiveMovies(int pageIndex)
         {
-            return await context.Movies.Where(x => x.Status == true).ToListAsync();
+            return await context.Movies.Where(x => x.Status == true).Skip((pageIndex - 1) * 20).Take(20).ToListAsync();
+        }
+
+        public async Task<int> GetActiveMoviesTotalPage()
+        {
+            int postCount = await context.Movies
+                .Where(x => x.Status == true).CountAsync();
+
+            return (int)Math.Ceiling(postCount / (double)20);
+        }
+
+        public async Task<bool> IsMovieExists(int movieId)
+        {
+            var movie = await context.Movies.FirstOrDefaultAsync(x => x.Id == movieId);
+            if (movie != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

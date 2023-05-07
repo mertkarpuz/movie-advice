@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.Interfaces
 {
-    public interface IHttpUtilities
+    public interface IRabbitMqHelper
     {
-        Task<string> ExecuteGetHttpRequest(string endpoint, Dictionary<string, string> headers);
+        void Publish(string queueName, string data);
     }
 }

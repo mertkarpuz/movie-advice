@@ -1,4 +1,5 @@
-﻿using MovieAdvice.Domain.Models;
+﻿using MovieAdvice.Domain.Interfaces;
+using MovieAdvice.Domain.Models;
 using MovieAdvice.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MovieAdvice.Infrastructure.Repositories
 {
-    public class CommentRepository
+    public class CommentRepository : ICommentRepository
     {
         private readonly MovieAdviceDbContext context;
         public CommentRepository(MovieAdviceDbContext context)
