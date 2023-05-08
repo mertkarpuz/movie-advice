@@ -5,13 +5,11 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -61,7 +59,6 @@ builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
     var sharedFolder = Path.Combine(env.ContentRootPath, "..", "ConfigFiles");
     config.AddJsonFile(Path.Combine(sharedFolder, "sharedsettings.json"), optional: true)
     .AddJsonFile("sharedsettings.json", optional: true);
-    //.AddJsonFile("appsettings.json", optional: true);
 });
 
 DependencyInjection.RegisterServices(builder.Services, builder.Configuration);
@@ -70,7 +67,6 @@ DependencyInjection.RegisterServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
