@@ -43,7 +43,7 @@ namespace MovieAdvice.Application.IoC
 
             services.AddScoped<IEmailService, EmailService>();
 
-            services.AddScoped<ICacheService, CacheService>();
+            services.AddSingleton<ICacheService, CacheService>();
 
             services.AddScoped<IJwtService, JwtService>();
 

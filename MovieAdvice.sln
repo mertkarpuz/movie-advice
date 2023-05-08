@@ -22,9 +22,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieAdvice.Infrastructure"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{6BEAB963-4347-4A26-8B73-BC91F4ECA45F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMoviesWorker", "src\Workers\GetMoviesWorker\GetMoviesWorker.csproj", "{A9945F43-8215-4385-A8F5-30066716E1D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetMoviesWorker", "src\Workers\GetMoviesWorker\GetMoviesWorker.csproj", "{A9945F43-8215-4385-A8F5-30066716E1D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieAdvice.API", "src\MovieAdvice.API\MovieAdvice.API.csproj", "{81C8A671-CEA1-4C8A-8437-4CC0FD2FE041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieAdvice.API", "src\MovieAdvice.API\MovieAdvice.API.csproj", "{81C8A671-CEA1-4C8A-8437-4CC0FD2FE041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdviceWorker", "src\Workers\AdviceWorker\AdviceWorker.csproj", "{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{81C8A671-CEA1-4C8A-8437-4CC0FD2FE041}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81C8A671-CEA1-4C8A-8437-4CC0FD2FE041}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81C8A671-CEA1-4C8A-8437-4CC0FD2FE041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{2F5D2726-E268-4BD4-B2D7-788C06E6A3F2} = {41CDD6D7-9EDD-4981-B8CA-574E646DE93E}
 		{5D753C65-D586-48EE-8BDC-B9B2550BA353} = {9FE407AE-A9BC-4E2F-90C2-23982E841A47}
 		{A9945F43-8215-4385-A8F5-30066716E1D4} = {6BEAB963-4347-4A26-8B73-BC91F4ECA45F}
+		{CC2CEE1E-41E3-4ADD-A838-22C0EECEB998} = {6BEAB963-4347-4A26-8B73-BC91F4ECA45F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2057C203-4852-442D-8F45-BD8AC038AF70}

@@ -17,7 +17,7 @@
         </tr>
 		<tr>
 			<td style="padding: 20px 0 0 0;">
-				<img src="https://image.tmdb.org/t/p/w500/oVbQgy2WYkwoBxBiUv2EfClhnh7.jpg" style="display: block; margin-left: auto;margin-right: auto;">
+				<img src="https://image.tmdb.org/t/p/w500/[MovieImage]" style="display: block; margin-left: auto;margin-right: auto;">
 			</td>
 		</tr>
 		
