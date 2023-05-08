@@ -1,18 +1,12 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MovieAdvice.Application.ConfigModels;
 using MovieAdvice.Application.Dtos.Advice;
-using MovieAdvice.Application.Dtos.Comment;
 using MovieAdvice.Application.Dtos.Email;
 using MovieAdvice.Application.Dtos.Movie;
 using MovieAdvice.Application.Interfaces;
-using MovieAdvice.Application.Services;
 using MovieAdvice.Application.Validation.FluentValidation.Advice;
-using MovieAdvice.Application.Validation.FluentValidation.Comment;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -39,8 +33,17 @@ namespace MovieAdvice.API.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// With this endpoint, you can recommend the selected movie to your friends by e-mail. (Authorization required)
+        /// </summary>
         [HttpPost]
         [Route("MakeAdvice")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(string), 200)]
         public async Task<ActionResult> MakeAdvice(AdviceDto adviceDto)
         {
             try

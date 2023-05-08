@@ -3,11 +3,6 @@ using MovieAdvice.Application.Dtos.Comment;
 using MovieAdvice.Application.Interfaces;
 using MovieAdvice.Domain.Interfaces;
 using MovieAdvice.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.Services
 {

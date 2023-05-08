@@ -4,15 +4,7 @@ using MovieAdvice.Application.Dtos.Movie;
 using MovieAdvice.Application.Dtos.User;
 using MovieAdvice.Domain.ApiModels.MovieApi;
 using MovieAdvice.Domain.Models;
-using Pipelines.Sockets.Unofficial.Arenas;
-using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace MovieAdvice.Application.Mapping
 {

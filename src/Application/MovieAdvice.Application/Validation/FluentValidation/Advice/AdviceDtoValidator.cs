@@ -1,12 +1,6 @@
 ﻿using FluentValidation;
 using MovieAdvice.Application.Dtos.Advice;
-using MovieAdvice.Application.Dtos.Comment;
 using MovieAdvice.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieAdvice.Application.Validation.FluentValidation.Advice
 {

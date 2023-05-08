@@ -8,7 +8,7 @@
     "Ssl": true,
     "Client": "smtp-mail.outlook.com",
     "Username": "mert.karpuz@outlook.com",
-    "Password": "Tunamutti123",
+    "Password": "----------------------------",
     "From": "mert.karpuz@outlook.com",
     "FromName": "MovieAdvice",
     "Subject": "Movie Advice",

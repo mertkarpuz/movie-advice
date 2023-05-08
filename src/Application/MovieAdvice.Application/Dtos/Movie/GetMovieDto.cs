@@ -1,5 +1,4 @@
-﻿
-using MovieAdvice.Application.Dtos.Comment;
+﻿using MovieAdvice.Application.Dtos.Comment;
 
 namespace MovieAdvice.Application.Dtos.Movie
 {

@@ -1,9 +1,6 @@
 using Cronos;
-using Microsoft.Extensions.Logging;
-using MovieAdvice.Application.ConfigModels;
 using MovieAdvice.Application.Interfaces;
 using MovieAdvice.Domain.ApiModels.MovieApi;
-using MovieAdvice.Domain.Models;
 
 namespace GetMoviesWorker
 {
@@ -11,8 +8,7 @@ namespace GetMoviesWorker
     {
         private readonly ILogger<Worker> _logger;
         private readonly IGetMoviesService getMoviesService;
-        //private readonly IMoviesService moviesService;
-        private const string schedule = "* * * * *"; // every hour
+        private const string schedule = "0 * * * *"; // every hour
         private readonly CronExpression cron;
         private readonly IServiceProvider Services;
         public Worker(ILogger<Worker> logger, IServiceProvider services, IGetMoviesService getMoviesService)

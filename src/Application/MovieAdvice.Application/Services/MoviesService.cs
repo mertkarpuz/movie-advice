@@ -48,7 +48,11 @@ namespace MovieAdvice.Application.Services
         public async Task<GetMovieDto> GetMovie(int movieId)
         {
             GetMovieDto getMovieDto = mapper.Map<GetMovieDto>(await movieRepository.GetMovie(movieId));
-            getMovieDto.MovieScore = Math.Round(getMovieDto.Comments.Sum(x => x.Point) / getMovieDto.Comments.Count, 1);
+            if (getMovieDto != null && getMovieDto.Comments.Count > 0)
+            {
+                getMovieDto.MovieScore = Math.Round(getMovieDto.Comments.Sum(x => x.Point) / getMovieDto.Comments.Count, 1);
+            }
+
             return getMovieDto;
         }
 

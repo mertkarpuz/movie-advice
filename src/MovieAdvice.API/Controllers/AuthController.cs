@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MovieAdvice.Application.Dtos.Login;
 using MovieAdvice.Application.Interfaces;
-using MovieAdvice.Application.Services;
+using MovieAdvice.Domain.Models;
 
 namespace MovieAdvice.API.Controllers
 {
@@ -20,8 +19,18 @@ namespace MovieAdvice.API.Controllers
             this.logger = logger;
         }
 
+
+        /// <summary>
+        /// With this endpoint, user will log-in to the application
+        /// </summary>
         [HttpPost]
         [Route("Login")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(JwtAccessToken), 201)]
+
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
             try

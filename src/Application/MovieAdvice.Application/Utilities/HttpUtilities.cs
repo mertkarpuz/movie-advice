@@ -1,6 +1,5 @@
 ﻿using MovieAdvice.Application.Interfaces;
 using RestSharp;
-using System.Text;
 
 namespace MovieAdvice.Application.Utilities
 {

@@ -31,7 +31,7 @@ namespace AdviceWorker
             consumer = new(channel);
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
             bool emailStatus = false;
@@ -51,8 +51,7 @@ namespace AdviceWorker
                 Thread.Sleep(60000);
             };
             channel.BasicConsume(queue: configuration.RabbitMqConfiguration.MakeAdviceQueue, autoAck: true, consumer: consumer);
+            return Task.CompletedTask;
         }
-
-
     }
 }

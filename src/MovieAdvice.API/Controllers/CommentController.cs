@@ -30,14 +30,18 @@ namespace MovieAdvice.API.Controllers
             this.mapper = mapper;
         }
 
+
+        /// <summary>
+        /// With this endpoint, you can add points and comments to the selected movie. (Authorization is required)
+        /// </summary>
         [HttpPost]
         [Route("AddComment")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(typeof(CommentAddDto), 201)]
         public async Task<ActionResult> AddComment(CommentAddDto commentAddDto)
         {
             try

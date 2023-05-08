@@ -1,7 +1,6 @@
 using AutoMapper;
 using GetMoviesWorker;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using MovieAdvice.Application.ConfigModels;
 using MovieAdvice.Application.Interfaces;
 using MovieAdvice.Application.Mapping;
@@ -21,6 +20,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             services.AddScoped<IMoviesService, MoviesService>();
             //IServiceProvider serviceProvider = services.BuildServiceProvider();
             services.AddTransient<IHttpUtilities, HttpUtilities>();
+            services.AddSingleton<ICacheService, CacheService>();
             services.AddTransient<IGetMoviesService, GetMoviesService>();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddDbContext<MovieAdviceDbContext>(options =>
