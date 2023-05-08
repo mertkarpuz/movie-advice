@@ -26,7 +26,7 @@ namespace MovieAdvice.Application.Services
                 message.To.Add(new MailAddress(emailDto.To));
                 message.From = new MailAddress(configuration.EmailConfiguration.From, configuration.EmailConfiguration.FromName);
                 message.Subject = configuration.EmailConfiguration.Subject;
-                message.Body = ChangeMailTemplate(emailDto.Sender, emailDto.MovieImage, emailDto.MovieTitle,emailDto.MovieDescription);
+                message.Body = ChangeMailTemplate(emailDto.Sender, emailDto.MovieImage, emailDto.MovieTitle, emailDto.MovieDescription);
                 message.IsBodyHtml = true;
                 using (var client = new SmtpClient(configuration.EmailConfiguration.Client))
                 {
@@ -49,7 +49,14 @@ namespace MovieAdvice.Application.Services
             string StrContent = string.Empty;
             StrContent = readFile;
             StrContent = StrContent.Replace("[FullName]", userName);
-            StrContent = StrContent.Replace("[MovieImage]", movieImage);
+            if (string.IsNullOrEmpty(movieImage))
+            {
+                movieImage = configuration.EmailConfiguration.ImageNotFoundUrl;
+            }
+            else
+            {
+                StrContent = StrContent.Replace("[MovieImage]", configuration.EmailConfiguration.ImageBaseUrl + movieImage);
+            }
             StrContent = StrContent.Replace("[MovieTitle]", movieTitle);
             StrContent = StrContent.Replace("[MovieDescription]", movieDescription);
             body = StrContent.ToString();

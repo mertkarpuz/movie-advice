@@ -3,8 +3,8 @@
 		<td bgcolor="#f9f9f9" style="padding: 0 0 50px 0;">
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
  <tr>
-  <td align="center" bgcolor="#0063a8" style="padding: 60px 0 60px 0;">
-    <h1 style="color:white">Movie Advice</b>
+  <td align="center" bgcolor="whitesmoke" style="padding: 60px 0 60px 0;border-bottom: 2px solid #d43834;">
+    <h1 style="color:black">Movie Advice</b>
   </td>
  </tr>
  <tr>
@@ -17,20 +17,21 @@
         </tr>
 		<tr>
 			<td style="padding: 20px 0 0 0;">
-				<img src="https://image.tmdb.org/t/p/w500/[ImageLink]" style="display: block; margin-left: auto;margin-right: auto;">
+				<img src="https://image.tmdb.org/t/p/w500/oVbQgy2WYkwoBxBiUv2EfClhnh7.jpg" style="display: block; margin-left: auto;margin-right: auto;">
 			</td>
 		</tr>
 		
 		<tr>
-			<td style="padding: 20px 0 0 0; font-size:30px;color:#999;text-align: center;">
-				Movie Advice
+			<td style="padding: 20px 0 0 0; font-size:30px;color:black;text-align: center;">
+				[MovieTitle]
 			</td>
 		</tr>
-      <tr>
-      	<td style="padding: 20px 0 0 0; font-size:12px;color:#999;text-align: center;">
-      		Movie Advice
-      	</td>
-      </tr>
+		<tr>
+			<td style="padding: 15px 0 0 0; font-size:20px;color: #161616;;text-align: center;">
+				[MovieDescription]
+			</td>
+		</tr>
+      
  	</table>
   </td>
  </tr>

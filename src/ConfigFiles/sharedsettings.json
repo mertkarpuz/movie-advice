@@ -11,7 +11,9 @@
     "Password": "Tunamutti123",
     "From": "mert.karpuz@outlook.com",
     "FromName": "MovieAdvice",
-    "Subject": "Movie Advice"
+    "Subject": "Movie Advice",
+    "ImageBaseUrl": "https://image.tmdb.org/t/p/w500/",
+    "ImageNotFoundUrl": "https://demofree.sirv.com/nope-not-here.jpg?w=500"
   },
   "MovieApiConfigurations": {
     "ApiUrl": "https://api.themoviedb.org/3/movie/now_playing",

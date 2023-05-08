@@ -16,5 +16,7 @@ namespace MovieAdvice.Application.ConfigModels
         public string From { get; set; }
         public string FromName { get; set; }
         public string Subject { get; set; }
+        public string ImageBaseUrl { get; set; }
+        public string ImageNotFoundUrl { get; set; }
     }
 }

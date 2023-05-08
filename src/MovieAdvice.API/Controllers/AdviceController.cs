@@ -69,7 +69,7 @@ namespace MovieAdvice.API.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError("AddComment", ex);
+                logger.LogError("MakeAdvice", ex);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }
             return Ok("Advice mail send!");
