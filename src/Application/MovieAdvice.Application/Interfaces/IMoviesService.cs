@@ -8,9 +8,9 @@ namespace MovieAdvice.Application.Interfaces
     {
         void SaveMovie(List<MovieApiModel> movieApiModelList);
         Task<GetMovieDto> GetMovie(int movieId);
-        void UpdateMoviesStatus();
         Task<List<MovieListDto>> GetActiveMovies(int pageIndex);
         Task<int> GetActiveMoviesTotalPage();
         Task<bool> IsMovieExists(int movieId);
+        Task<GetMovieDto> GetMovieByTitle(string movieTitle);
     }
 }

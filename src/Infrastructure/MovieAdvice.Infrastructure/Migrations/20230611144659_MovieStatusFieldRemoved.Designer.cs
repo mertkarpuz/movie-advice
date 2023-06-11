@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieAdvice.Infrastructure.Context;
 
@@ -11,9 +12,10 @@ using MovieAdvice.Infrastructure.Context;
 namespace MovieAdvice.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieAdviceDbContext))]
-    partial class MovieAdviceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230611144659_MovieStatusFieldRemoved")]
+    partial class MovieStatusFieldRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

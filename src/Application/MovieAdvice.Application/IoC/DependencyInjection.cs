@@ -71,6 +71,12 @@ namespace MovieAdvice.Application.IoC
             });
 
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.ConnectionStrings.RedisConnection;
+            });
+
+
             services.AddFluentValidationAutoValidation();
         }
     }

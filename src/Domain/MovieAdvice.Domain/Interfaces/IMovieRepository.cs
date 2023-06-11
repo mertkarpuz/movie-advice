@@ -7,9 +7,9 @@ namespace MovieAdvice.Domain.Interfaces
     {
         void SaveMovies(List<Movie> movieList);
         Task<Movie> GetMovie(int movieId);
-        void UpdateMoviesStatus();
         Task<List<Movie>> GetActiveMovies(int pageIndex);
         Task<int> GetActiveMoviesTotalPage();
         Task<bool> IsMovieExists(int movieId);
+        Task<Movie> GetMovieByTitle(string movieTitle);
     }
 }

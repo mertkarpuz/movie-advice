@@ -1,14 +1,14 @@
 {
   "ConnectionStrings": {
     "SQLConnection": "Server=DESKTOP-1SLG2VP;User Id=sa;Password=phoenix1;Database=MovieAdviceDB;TrustServerCertificate=True",
-    "RedisConnection": "redis-11135.c8.us-east-1-4.ec2.cloud.redislabs.com:11135,password=IbIrgFrNs60K9zL093PzivEmCSlaumnh"
+    "RedisConnection": "redis-14444.c278.us-east-1-4.ec2.cloud.redislabs.com:14444,password=OtlkNQQIdSASlBgkJ18oXjqdirKGLy9i"
   },
   "EmailConfiguration": {
     "Port": 587,
     "Ssl": true,
     "Client": "smtp-mail.outlook.com",
     "Username": "mert.karpuz@outlook.com",
-    "Password": "----------------------------",
+    "Password": "ramqgb3moMM",
     "From": "mert.karpuz@outlook.com",
     "FromName": "MovieAdvice",
     "Subject": "Movie Advice",

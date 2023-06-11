@@ -24,19 +24,16 @@ namespace MovieAdvice.Infrastructure.Repositories
             return await context.Movies.Include(x => x.Comments)
                 .ThenInclude(x => x.User).FirstOrDefaultAsync(x => x.Id == movieId);
         }
-        public async void UpdateMoviesStatus()
-        {
-            await context.Movies.Where(x=>x.Status == true).ForEachAsync(x => x.Status = false);
-        }
+
         public async Task<List<Movie>> GetActiveMovies(int pageIndex)
         {
-            return await context.Movies.Where(x => x.Status == true).Skip((pageIndex - 1) * 20).Take(20).ToListAsync();
+            return await context.Movies.Skip((pageIndex - 1) * 20).Take(20).ToListAsync();
         }
 
         public async Task<int> GetActiveMoviesTotalPage()
         {
             int postCount = await context.Movies
-                .Where(x => x.Status == true).CountAsync();
+                .CountAsync();
 
             return (int)Math.Ceiling(postCount / (double)20);
         }
@@ -49,6 +46,11 @@ namespace MovieAdvice.Infrastructure.Repositories
                 return true;
             }
             return false;
+        }
+
+        public async Task<Movie> GetMovieByTitle(string movieTitle)
+        {
+            return await context.Movies.FirstOrDefaultAsync(x => x.Title == movieTitle);
         }
     }
 }

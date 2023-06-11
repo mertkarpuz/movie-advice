@@ -25,7 +25,8 @@ namespace MovieAdvice.Application.Services
 
         public async Task<List<MovieListDto>> GetActiveMovies(int pageIndex)
         {
-            List<MovieListDto> cachedList = await cacheService.GetData<List<MovieListDto>>(configuration.CacheKeys.ActiveMoviesKey + pageIndex.ToString());
+            List<MovieListDto> cachedList = await cacheService.GetData<List<MovieListDto>>(configuration.CacheKeys.ActiveMoviesKey
+                + pageIndex.ToString());
 
             if (cachedList != null)
             {
@@ -35,7 +36,7 @@ namespace MovieAdvice.Application.Services
             List<MovieListDto> movieList = mapper.Map<List<MovieListDto>>(await movieRepository.GetActiveMovies(pageIndex));
 
             await cacheService.SetData(configuration.CacheKeys.ActiveMoviesKey + pageIndex.ToString(), movieList,
-                DateTimeOffset.Now.AddMinutes(2));
+                DateTimeOffset.Now.AddHours(1));
 
             return movieList;
         }
@@ -56,6 +57,11 @@ namespace MovieAdvice.Application.Services
             return getMovieDto;
         }
 
+        public async Task<GetMovieDto> GetMovieByTitle(string movieTitle)
+        {
+            return mapper.Map<GetMovieDto>(await movieRepository.GetMovieByTitle(movieTitle));
+        }
+
         public Task<bool> IsMovieExists(int movieId)
         {
             return movieRepository.IsMovieExists(movieId);
@@ -66,9 +72,5 @@ namespace MovieAdvice.Application.Services
             movieRepository.SaveMovies(mapper.Map<List<Movie>>(movieApiModelList));
         }
 
-        public void UpdateMoviesStatus()
-        {
-            movieRepository.UpdateMoviesStatus();
-        }
     }
 }

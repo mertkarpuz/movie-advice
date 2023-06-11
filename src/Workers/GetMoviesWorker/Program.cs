@@ -26,6 +26,12 @@ IHost host = Host.CreateDefaultBuilder(args)
             services.AddDbContext<MovieAdviceDbContext>(options =>
             options.UseSqlServer(iConfiguration.GetSection("ConnectionStrings:SQLConnection").Value), ServiceLifetime.Transient);
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration.ConnectionStrings.RedisConnection;
+            });
+
+
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new MappingProfile());
