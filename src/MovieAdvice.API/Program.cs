@@ -1,4 +1,8 @@
+using Hangfire;
+using HangfireBasicAuthenticationFilter;
 using Microsoft.OpenApi.Models;
+using MovieAdvice.Application.ConfigModels;
+using MovieAdvice.Application.Interfaces;
 using MovieAdvice.Application.IoC;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -63,6 +67,13 @@ builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
 
 DependencyInjection.RegisterServices(builder.Services, builder.Configuration);
 
+builder.Services.AddHangfire(config => config
+            .UseSimpleAssemblyNameTypeSerializer()
+.UseRecommendedSerializerSettings()
+            .UseSqlServerStorage("Server=DESKTOP-1SLG2VP;User Id=sa;Password=phoenix1;Database=MovieAdviceDB;TrustServerCertificate=True")
+            );
+builder.Services.AddHangfireServer();
+
 
 
 var app = builder.Build();
@@ -75,7 +86,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
+
+
+app.UseHangfireDashboard("/hangfire", new DashboardOptions()
+{
+    DashboardTitle = "MovieAdvice Hangfire",
+    Authorization = new[] {
+        new HangfireCustomBasicAuthenticationFilter()
+        {
+            User = "Mert",
+            Pass = "Test"
+        }
+    }
+});
+app.MapHangfireDashboard();
+
+RecurringJob.AddOrUpdate<IGetMoviesService>("SnycMovies", x => x.SyncMovies(), Cron.Minutely);
 
 app.Run();

@@ -6,5 +6,6 @@ namespace MovieAdvice.Application.Interfaces
     public interface IGetMoviesService
     {
         Task<RootApiModel> GetMovies(int page);
+        Task SyncMovies();
     }
 }
